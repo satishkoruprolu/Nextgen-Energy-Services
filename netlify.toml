@@ -1,10 +1,22 @@
-[[redirects]]
-  from   = "/api/jobs"
-  to     = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRo7RUoXPVxs1Qh7FQits1DP7YmAZgewbqDJNBB6b7CuqN6m6VCUInHRqtMwVxyRAPFyLelROspOPWP/pub?gid=0&single=true&output=csv"
-  status = 200
-  force  = true
+[build]
+  command = "npm run build -- --configuration production"
+  publish = "dist/nextgen-energy/browser"
 
 [[redirects]]
-  from   = "/*"
-  to     = "/index.html"
+  from = "/api/jobs"
+  to = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRo7RUoXPVxs1Qh7FQits1DP7YmAZgewbqDJNBB6b7CuqN6m6VCUInHRqtMwVxyRAPFyLelROspOPWP/pub?gid=0&single=true&output=csv"
   status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
+ [[headers]]
+  for = "/*"
+
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
