@@ -1,0 +1,80 @@
+<nav class="navbar">
+  <div class="container-fluid px-5">
+
+    <a routerLink="/" class="brand">
+      <img src="assets/images/logo-icon.png" class="brand-logo" />
+      <span class="brand-text">Nextgen Energy Services</span>
+    </a>
+	
+	 <!-- Mobile Toggle -->
+	 <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+	<!-- Links -->
+     <ul class="nav-links" [class.active]="isMenuOpen">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()"> Home</a></li>
+      <li><a routerLink="/about" (click)="toggleMenu()" routerLinkActive="active">About</a></li>
+	<!-- services drop down -->
+      <li class="mega-dropdown" (mouseenter)="openServices()" (mouseleave)="closeServices()" [class.active-parent]="isServicesActive()">
+	  <a (click)="toggleServices()">Services ▾</a>
+
+	  <div class="mega-menu" [class.show]="isServicesOpen">
+
+		<div class="mega-container">
+
+		  <a routerLink="/lab-calibration" class="mega-item" routerLinkActive="active">
+			<span class="icon">🧪</span>
+			<span>Laboratory Calibration</span>
+		  </a>
+
+		  <a routerLink="/on-site-calibration" class="mega-item" routerLinkActive="active">
+			<span class="icon">🏭</span>
+			<span>On-Site Calibration</span>
+		  </a>
+
+		  <a routerLink="/loop-checking" class="mega-item" routerLinkActive="active">
+			<span class="icon">🔄</span>
+			<span>Loop Checking</span>
+		  </a>
+
+		  <a routerLink="/commissioning" class="mega-item" routerLinkActive="active">
+			<span class="icon">⚙️</span>
+			<span>Commissioning</span>
+		  </a>
+
+		  <a routerLink="/safety-valve-testing" class="mega-item" routerLinkActive="active">
+			<span class="icon">🛡️</span>
+			<span>Safety Valve Testing</span>
+		  </a>
+
+		</div>
+
+	  </div>
+	</li>
+	
+	<!-- employers drop down -->
+      <li class="mega-dropdown" (mouseenter)="openEmployers()" (mouseleave)="closeEmployers()" [class.active-parent]="isEmployersActive()">
+	  <a (click)="toggleEmployers()">Careers ▾</a>
+
+	  <div class="mega-menu" [class.show]="isEmployersOpen">
+
+		<div class="mega-container">
+
+		  <a routerLink="/employers" class="mega-item" routerLinkActive="active">
+			<span class="icon">💼</span>
+			<span>Hire Talent</span>
+		  </a>
+
+		  <a routerLink="/careers" class="mega-item" routerLinkActive="active">
+			<span class="icon">🧑‍💻</span>
+			<span>Job Seekers</span>
+		  </a>
+
+		</div>
+
+	  </div>
+	</li>
+      <li><a routerLink="/contact" (click)="toggleMenu()" routerLinkActive="active">Contact</a></li>
+    </ul>
+
+  </div>
+</nav>

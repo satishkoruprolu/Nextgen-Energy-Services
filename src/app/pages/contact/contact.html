@@ -1,0 +1,99 @@
+<!-- HEADER -->
+<section class="contact-header">
+ <h1 class="section-title">Get in Touch</h1>
+
+  <p>
+    Whether you're an employer with a hiring requirement or a candidate with a
+    general inquiry, our team is ready to help.
+  </p>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- LEFT CARD -->
+    <div class="contact-card">
+      <h3>Contact Information</h3>
+
+      <div class="contact-item">
+        <span>Email</span>
+        <strong>hr@nextgenenergyservices.com</strong>
+      </div>
+
+      <div class="contact-item">
+        <span>Phone</span>
+        <strong>+91 7207270719</strong>
+      </div>
+
+      <div class="contact-item">
+        <span>Office Location</span>
+        <strong>Hyderabad, Telangana, India</strong>
+      </div>
+
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps?q=Hyderabad,Telangana,India&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+	
+	<div class="contact-card">
+	<h2>Contact Us</h2>
+	
+	<p class="card-subtext">
+        Share your Enquiry and we’ll get back at earliest possible.
+    </p>
+    
+    <!-- FORM -->
+  <form [formGroup]="contactForm" (ngSubmit)="sendEmail()">
+  
+	<input type="text" formControlName="title" placeholder="You Enquiring for..? *" />
+    <div class="error" *ngIf="contactForm.get('title')?.touched && contactForm.get('title')?.invalid">
+      Title must be atleast 8 characters
+    </div>
+
+    <input type="text" formControlName="name" placeholder="Full Name *" (keypress)="allowOnlyLetters($event)"/>
+    <div class="error" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+      Name must be atleast 3 characters
+    </div>
+
+    <input type="email" formControlName="email" placeholder="Email Address *" (keydown.space)="$event.preventDefault()"/>
+    <div class="error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+      <span *ngIf="contactForm.get('email')?.errors?.['required']">
+			Email address is required.
+		  </span>
+		  
+		  <span *ngIf="contactForm.get('email')?.errors?.['pattern']">
+			Enter a valid email address (example: name@example.com).
+		  </span>
+    </div>
+
+    <textarea formControlName="message" placeholder="Your Message... *"></textarea>
+
+    <div class="error" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid">
+      Message must be atleast 10 characters
+    </div>
+	
+	 <!-- SUCCESS TOAST -->
+	<div class="toast success" *ngIf="success">
+	  <span>✅</span>
+	  <span>Message sent successfully! We will contact you shortly.</span>
+	</div>
+
+	<div class="toast error" *ngIf="error">
+	  <span>❌</span>
+	  <span>Failed to send message. Please try again.</span>
+	</div>
+
+    <button type="submit" [disabled]="loading || contactForm.invalid">
+	{{ loading ? 'Sending...' : 'Send Message' }}
+	</button>
+
+  </form>
+</div>
+
+  </div>
+</section>
+

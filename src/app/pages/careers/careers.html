@@ -1,0 +1,185 @@
+<!-- ===== HERO ===== -->
+<section class="careers-hero">
+  <div class="hero-content">
+    <h1>Build Your Career With Us</h1>
+    <p>
+      Join Nextgen Energy Services and work on instrumentation, calibration
+      and automation projects across India's leading energy and process industries.
+    </p>
+    <button class="apply-btn" (click)="openGeneralForm()">Apply Now</button>
+  </div>
+</section>
+
+<!-- ===== WHY JOIN ===== -->
+<section class="why-join container">
+  <h2>Why Join Nextgen Energy</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">&#128640;</div>
+      <h4>Growth-Driven</h4>
+      <p>Clear career paths, mentorship, and exposure to large-scale plant projects.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#127757;</div>
+      <h4>Pan-India Sites</h4>
+      <p>Work across leading oil &amp; gas, chemical and pharma facilities.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#127891;</div>
+      <h4>Continuous Learning</h4>
+      <p>NABL-aligned training, certifications and hands-on instrumentation labs.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#129309;</div>
+      <h4>People First</h4>
+      <p>Safety, fairness and a supportive engineering culture.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JOB LISTINGS ===== -->
+<section class="openings container">
+  <div class="section-head">
+    <h2>Current Openings</h2>
+    <p>Explore roles across calibration, commissioning and field engineering.</p>
+  </div>
+
+  <div class="jobs-loading" *ngIf="jobsLoading">
+    <div class="jobs-spinner"></div>
+    <p>Loading current openings...</p>
+  </div>
+
+  <div class="jobs-error" *ngIf="jobsError">
+    <div class="jobs-error-icon">&#9888;</div>
+    <p>Unable to load job listings right now. Please refresh the page or try again later.</p>
+  </div>
+
+  <div class="openings-grid" *ngIf="!jobsLoading && !jobsError">
+    <div class="opening-card" *ngFor="let job of openings">
+      <h3>{{ job.title }}</h3>
+      <ul class="meta">
+        <li><strong>Location:</strong> {{ job.location }}</li>
+        <li><strong>Type:</strong> {{ job.type }}</li>
+        <li><strong>Experience:</strong> {{ job.experience }}</li>
+        <li><strong>Description:</strong> {{ job.description }}</li>
+      </ul>
+      <button class="apply-link" (click)="applyFor(job.title)">Apply →</button>
+    </div>
+  </div>
+
+  <div class="jobs-empty" *ngIf="!jobsLoading && !jobsError && openings.length === 0">
+    <p>No openings at the moment. Please check back soon!</p>
+  </div>
+</section>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <!-- X button -->
+    <button type="button" class="modal-close" (click)="closeModal()" title="Close">&#10005;</button>
+
+    <!-- SUCCESS VIEW -->
+    <div class="success-card" *ngIf="isSuccess">
+      <div class="success-check">&#10003;</div>
+      <h2>Thank you, {{ submittedName }}!</h2>
+      <p class="lead">
+        Your application for <strong>{{ selectedRole }}</strong> has been sent successfully.
+      </p>
+      <p>
+        Our talent team will review it and get back to you within
+        <strong>3 business days</strong>. A confirmation has been sent to your email.
+      </p>
+      <div class="success-actions">
+        <button class="apply-btn" (click)="applyAnother()">Submit Another Application</button>
+        <button class="apply-btn light" (click)="closeModal()">Back to Jobs</button>
+      </div>
+    </div>
+
+    <!-- FORM VIEW -->
+    <div class="form-card" *ngIf="!isSuccess">
+      <div class="form-head">
+        <h2>Apply for: {{ selectedRole }}</h2>
+        <p>Submit your details and our talent team will reach out within <strong>3 business days</strong>.</p>
+      </div>
+
+      <div class="toast error" *ngIf="submitError">
+        Failed to submit. Please try again or email us directly.
+      </div>
+
+      <form [formGroup]="applyForm" (ngSubmit)="sendApplication()" novalidate>
+        <div class="form-grid">
+
+          <div class="field">
+            <input type="text" formControlName="firstName" placeholder="First Name *"
+                   (keypress)="allowOnlyLetters($event)" />
+            <div class="err" *ngIf="applyForm.get('firstName')?.touched && applyForm.get('firstName')?.invalid">
+              Enter a valid first name (letters only, min 3 chars).
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="text" formControlName="lastName" placeholder="Last Name *"
+                   (keypress)="allowOnlyLetters($event)" />
+            <div class="err" *ngIf="applyForm.get('lastName')?.touched && applyForm.get('lastName')?.invalid">
+              Enter a valid last name (letters only, min 3 chars).
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="email" formControlName="email" placeholder="Email *"
+                   (keydown.space)="$event.preventDefault()" />
+            <div class="err" *ngIf="applyForm.get('email')?.touched && applyForm.get('email')?.invalid">
+              <span *ngIf="applyForm.get('email')?.errors?.['required']">Email address is required.</span>
+              <span *ngIf="applyForm.get('email')?.errors?.['pattern']">Enter a valid email (e.g. name@example.com).</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="tel" formControlName="phone" placeholder="Phone *"
+                   maxlength="10" (keypress)="allowOnlyNumbers($event)" />
+            <div class="err" *ngIf="applyForm.get('phone')?.touched && applyForm.get('phone')?.invalid">
+              Enter a valid 10-digit mobile number.
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="text" formControlName="role" placeholder="Role Applying For *" />
+            <div class="err" *ngIf="applyForm.get('role')?.touched && applyForm.get('role')?.invalid">
+              Role is required.
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="number" formControlName="experience" placeholder="Years of Experience *"
+                   min="0" max="30" (keypress)="allowOnlyNumbers($event)" />
+            <div class="err" *ngIf="applyForm.get('experience')?.touched && applyForm.get('experience')?.invalid">
+              Experience must be between 0 and 30 years.
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="text" formControlName="location" placeholder="Current Location" />
+          </div>
+
+          <div class="field">
+            <input type="url" formControlName="linkedIn" placeholder="LinkedIn / Portfolio URL" />
+          </div>
+
+        </div>
+
+        <textarea formControlName="coverNote"
+                  placeholder="Brief cover note — why you are a fit for this role"></textarea>
+
+        <button type="submit" class="apply-btn full" [disabled]="loading || applyForm.invalid">
+          {{ loading ? 'Submitting...' : 'Submit Application' }}
+        </button>
+
+        <p class="disclaimer">
+          Your information is kept confidential and used only for recruitment purposes.
+        </p>
+      </form>
+    </div>
+
+  </div>
+</div>

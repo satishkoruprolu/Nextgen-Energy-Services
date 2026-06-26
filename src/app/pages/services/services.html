@@ -1,0 +1,67 @@
+<!-- HERO -->
+<section class="hero">
+  <h1>Our Services</h1>
+  <p>Delivering precision-driven instrumentation & automation solutions</p>
+</section>
+
+<!-- INTRO -->
+<section class="intro container">
+  <p>
+    At Nextgen Energy Services, we provide comprehensive calibration,
+    testing, and commissioning solutions across oil & gas, energy,
+    and manufacturing industries.
+  </p>
+</section>
+
+<!-- SERVICES GRID -->
+<section class="services container">
+
+  <div class="grid">
+
+    <div class="card" *ngFor="let s of services" [routerLink]="s.route">
+
+      <div class="icon">{{s.icon}}</div>
+
+      <h3>{{s.title}}</h3>
+
+      <p>{{s.desc}}</p>
+
+      <span class="link">Explore →</span>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why">
+
+  <h2>Why Choose Us</h2>
+
+  <div class="why-grid">
+
+    <div class="why-card">
+      <h4>NABL Certified</h4>
+      <p>Accurate and compliant calibration services.</p>
+    </div>
+
+    <div class="why-card">
+      <h4>Expert Engineers</h4>
+      <p>Highly experienced instrumentation professionals.</p>
+    </div>
+
+    <div class="why-card">
+      <h4>Quick Turnaround</h4>
+      <p>Fast and reliable service delivery.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h3>Need a Service Consultation?</h3>
+  <button routerLink="/contact">Contact Us</button>
+</section>

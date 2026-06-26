@@ -1,0 +1,21 @@
+<div class="accordion">
+
+  <div class="item" *ngFor="let item of items; let i = index">
+
+    <div 
+      class="title"
+      (click)="toggle(i)"
+      [class.active]="activeIndex === i">
+
+      {{item.title}}
+      <span class="icon">{{activeIndex === i ? '−' : '+'}}</span>
+
+    </div>
+
+    <div class="content" [class.open]="activeIndex === i">
+      <p>{{item.content}}</p>
+    </div>
+
+  </div>
+
+</div>

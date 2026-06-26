@@ -1,0 +1,44 @@
+.accordion { max-width: 900px; margin: auto; }
+
+.item {
+  border-bottom: 1px solid #e2e6ea;
+  padding: 14px 0;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f5f9f;
+  transition: 0.3s;
+}
+
+.title span { transition: transform 0.4s ease; }
+.title.active span { transform: rotate(180deg); }
+
+.title:hover,
+.title.active { color: #ff7a00; }
+
+.icon { font-size: 18px; font-weight: 600; }
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+.content.open {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.content p {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+}

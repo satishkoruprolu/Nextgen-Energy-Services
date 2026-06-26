@@ -1,0 +1,175 @@
+
+<!-- ================ HERO ================ -->
+<section class="emp-hero">
+  <div class="hero-content">
+    <h1>Hire Talent</h1>
+    <p>
+      Nextgen Energy Services partners with organizations to deliver fast,
+      reliable, and confidential recruitment solutions tailored to your
+      instrumentation &amp; automation hiring needs.
+    </p>
+    <button class="apply-btn" (click)="openForm()">Submit Hiring Requirement</button>
+  </div>
+</section>
+
+<!-- ================ HIRING SOLUTIONS ================ -->
+<section class="solutions container">
+  <div class="section-head">
+    <h2>Our Hiring Solutions</h2>
+    <p>Tailored recruitment models for energy, oil &amp; gas, chemical and process industries.</p>
+  </div>
+
+  <div class="solutions-grid">
+    <div class="solution-card" *ngFor="let item of hiringSolutions">
+      <div class="solution-icon">{{ item.icon }}</div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.desc }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================ HOW IT WORKS ================ -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-head">
+      <h2>How It Works</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Share Requirement</h4>
+        <p>Tell us the role, skills, location and hiring timeline.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Curated Shortlist</h4>
+        <p>We deliver pre-screened, role-fit candidates within 24-72 hours.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Interview &amp; Hire</h4>
+        <p>You interview, we coordinate. Final selection with full support.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Post-Onboarding</h4>
+        <p>Continuous follow-up to ensure smooth ramp-up and retention.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================ FORM / SUCCESS ================ -->
+<section class="form-section container" *ngIf="isFormOpen" id="hiringForm">
+
+  <!-- ============ SUCCESS STATE ============ -->
+  <div class="success-card big" *ngIf="success">
+    <div class="success-check">&#10003;</div>
+    <h2>Thank you, {{ submittedName }}!</h2>
+    <p class="lead">
+      Your hiring requirement for <strong>{{ submittedCompany }}</strong> has been received successfully.
+    </p>
+    <p>
+      Our recruitment specialists will review it and contact you within
+      <strong>24 hours</strong>. A confirmation copy has been emailed to you.
+    </p>
+    <div class="success-actions">
+      <button class="apply-btn" (click)="submitAnother()">Submit Another Requirement</button>
+    </div>
+  </div>
+
+  <!-- ============ FORM STATE ============ -->
+  <div class="form-card" *ngIf="!success">
+
+    <div class="form-head">
+      <h2>Tell Us Your Hiring Requirement</h2>
+      <p>Share your requirements below. Our recruitment specialists will connect
+        with you within <strong>24 hours</strong>.</p>
+    </div>
+
+    <div class="toast error" *ngIf="error">
+      Failed to submit. Please try again or email us directly.
+    </div>
+
+    <form [formGroup]="hiringForm" (ngSubmit)="sendRequirement()" novalidate>
+
+      <div class="form-grid">
+        <div class="field">
+          <input type="text" formControlName="firstName" placeholder="First Name *" (keypress)="allowOnlyLetters($event)"/>
+          <div class="err" *ngIf="hiringForm.get('firstName')?.touched && hiringForm.get('firstName')?.invalid">
+            Enter a valid first name (letters only min 3 chars).
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" formControlName="lastName" placeholder="Last Name *" (keypress)="allowOnlyLetters($event)"/>
+          <div class="err" *ngIf="hiringForm.get('lastName')?.touched && hiringForm.get('lastName')?.invalid">
+           Enter a valid  Last name (letters only min 3 chars).
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="email" formControlName="email" placeholder="Email *" (keydown.space)="$event.preventDefault()"/>
+          <div class="err" *ngIf="hiringForm.get('email')?.touched && hiringForm.get('email')?.invalid">
+           <span *ngIf="hiringForm.get('email')?.errors?.['required']">
+			Email address is required.
+		  </span>
+		  
+		  <span *ngIf="hiringForm.get('email')?.errors?.['pattern']">
+			Enter a valid email address (example: name@example.com).
+		  </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" formControlName="company" placeholder="Company Name *" />
+          <div class="err" *ngIf="hiringForm.get('company')?.touched && hiringForm.get('company')?.invalid">
+            Company name is required.
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" formControlName="jobTitle" placeholder="Your Job Title *" />
+          <div class="err" *ngIf="hiringForm.get('jobTitle')?.touched && hiringForm.get('jobTitle')?.invalid">
+            Job title is required.
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="tel" formControlName="phone" placeholder="Phone (Optinal)" maxlength="10" (keypress)="allowOnlyNumbers($event)"/>
+          <div class="err" *ngIf="hiringForm.get('phone')?.touched && hiringForm.get('phone')?.invalid">
+            Enter a valid 10-digit mobile number.
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" formControlName="location" placeholder="Location (City / Country)" />
+        </div>
+
+        <div class="field">
+          <select formControlName="hiringType">
+            <option value="">Hiring Type</option>
+            <option>Full-time</option>
+            <option>Contract</option>
+            <option>Both</option>
+          </select>
+        </div>
+      </div>
+
+      <textarea formControlName="roleDetails"
+                placeholder="Describe the role(s), required skills, seniority, and hiring timeline *"></textarea>
+      <div class="err" *ngIf="hiringForm.get('roleDetails')?.touched && hiringForm.get('roleDetails')?.invalid">
+        Please provide role details (min 10 characters).
+      </div>
+
+      <button type="submit" class="apply-btn full" [disabled]="loading || hiringForm.invalid">
+        {{ loading ? 'Submitting...' : 'Submit Requirement' }}
+      </button>
+
+      <p class="disclaimer">
+        Your information is confidential and used strictly for recruitment purposes.
+      </p>
+    </form>
+  </div>
+</section>
